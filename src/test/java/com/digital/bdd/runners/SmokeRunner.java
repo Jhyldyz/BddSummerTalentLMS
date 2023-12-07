@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 @CucumberOptions(
         features = "src/test/resources/feature",
         glue = "com/digital/bdd/step_defs",
-        tags = "@Table",
+        tags = "@params1",
         monochrome = true,
         dryRun = false,
         plugin = {

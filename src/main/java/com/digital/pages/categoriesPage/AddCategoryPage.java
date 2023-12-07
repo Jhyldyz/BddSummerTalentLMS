@@ -55,6 +55,9 @@ public class AddCategoryPage extends BasePage {
     @FindBy(xpath = "//a[text()='QA']")
     public WebElement expectedAfterClickAddNewCategoryBtn;
 
+    @FindBy(xpath = "//span[@class='help-inline']")
+    public WebElement expectedTextWithInvalidName;
+
 
     public AddCategoryPage clickAddCategoryBtnOnHomePage(){
         elementActions.clickElement(addCategoryBtnOnHomePage);

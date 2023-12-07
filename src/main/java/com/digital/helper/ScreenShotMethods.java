@@ -14,7 +14,7 @@ import java.util.Calendar;
 
 public class ScreenShotMethods {
 
-    protected WebDriver driver = Driver.getDriver();
+    public WebDriver driver = Driver.getDriver();
 
     /** Method to take screen shot and save in ./Screenshots folder*/
     public void takeScreenShot() throws IOException
