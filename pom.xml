@@ -24,52 +24,42 @@
         <allure.testng.version>2.17.3</allure.testng.version>
     </properties>
     <profiles>
+
         <profile>
-            <id>SmokeTest</id>
+            <id>smoke</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>3.0.0-M5</version>
+                        <version>2.21.0</version>
                         <configuration>
-                            <suiteXmlFiles>
-                                <suiteXmlFile>smoke_tests.xml</suiteXmlFile>
-                            </suiteXmlFiles>
+                            <includes>
+                                <include>**/SmokeRunner.java</include>
+                            </includes>
+                            <testFailureIgnore>true</testFailureIgnore>
                         </configuration>
                     </plugin>
                 </plugins>
             </build>
         </profile>
+
         <profile>
-            <id>RegressionTest</id>
+            <id>regression</id>
             <build>
                 <plugins>
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-surefire-plugin</artifactId>
-                        <version>3.0.0-M5</version>
+                        <version>2.21.0</version>
                         <configuration>
-                            <suiteXmlFiles>
-                                <suiteXmlFile>regression_tests.xml</suiteXmlFile>
-                            </suiteXmlFiles>
-                        </configuration>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-        <profile>
-            <id>EndToEndTest</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <version>3.0.0-M5</version>
-                        <configuration>
-                            <suiteXmlFiles>
-                                <suiteXmlFile>end_to_end_tests.xml</suiteXmlFile>
-                            </suiteXmlFiles>
+                            <includes>
+                                <include>**/RegressionRunner.java</include>
+                            </includes>
+                            <testFailureIgnore>true</testFailureIgnore>
                         </configuration>
                     </plugin>
                 </plugins>
@@ -162,6 +152,28 @@
             <artifactId>assertj-core</artifactId>
             <version>3.23.1</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-java -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-java</artifactId>
+            <version>7.14.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/io.cucumber/cucumber-junit -->
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-junit</artifactId>
+            <version>7.14.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.10.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -177,50 +189,27 @@
                     <target>9</target>
                 </configuration>
             </plugin>
+
+
+
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
-                <configuration>
-                    <failIfNoSpecifiedTests>false</failIfNoSpecifiedTests>
-                    <failIfNoTests>false</failIfNoTests>
-                    <encoding>UTF-8</encoding>
-                    <!--                    <reuseForks>true</reuseForks>-->
-                    <!--                    <argLine>-Xmx1024m -XX:MaxPermSize=256m</argLine>-->
-                    <suiteXmlFiles>
-                        <suiteXmlFile>testng.xml</suiteXmlFile>
-                    </suiteXmlFiles>
-                    <testFailureIgnore>true</testFailureIgnore>
-                    <!-- java heap size = Xms2048m = 2GB -->
-                    <!-- JVM Option to set command line -->
-                    <!-- javaagent: used to take this jar files as paramater to pass To JVM -->
-                    <!--suppress UnresolvedMavenProperty -->
-                    <argLine>
-                        -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
-                    </argLine>
-                    <!-- Take output to target -->
-                    <systemPropertyVariables>
-                        <allure.results.directory>${project.build.directory}/allure-results</allure.results.directory>
-                    </systemPropertyVariables>
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.aspectj</groupId>
-                        <artifactId>aspectjweaver</artifactId>
-                        <version>1.9.19</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-            <!-- give IntelliJ acceptable to run and open allure report automatic By download allure binary in project
-            download allure binary -->
-            <plugin>
-                <groupId>io.qameta.allure</groupId>
-                <artifactId>allure-maven</artifactId>
-                <version>2.10.0</version>
-                <configuration>
-                    <!--suppress UnresolvedMavenProperty -->
-                    <reportVersion>${allure.version}</reportVersion>
-                </configuration>
+                <groupId>net.masterthought</groupId>
+                <artifactId>maven-cucumber-reporting</artifactId>
+                <version>3.15.0</version>
+                <executions>
+                    <execution>
+                        <id>1</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <projectName>Summer23TalentLMS ${project.version}</projectName>
+                            <outputDirectory>${project.build.directory}/summer23_CucumberReport</outputDirectory>
+                            <cucumberOutput>${project.build.directory}/cucumber.json</cucumberOutput>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
