@@ -1,4 +1,5 @@
 package com.digital.bdd.step_defs;
+import com.digital.models.CategoriesPojo;
 import com.digital.models.UserPojo;
 import io.cucumber.java.en.Given;
 import java.util.List;
@@ -23,4 +24,5 @@ public class DataTable_step {
                 entry.get("email")
         );
     }
+
 }

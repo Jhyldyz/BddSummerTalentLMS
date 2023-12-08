@@ -19,15 +19,16 @@ Feature: create Categories
     When click add new categories button
     Then the user get a message
 
-  @Table
+  @Table1
 
   Scenario Outline: create new categories with table
-    Given create new categories up with following categoriesPojo
-    And enter categories name <"name">
-    And  choose parent categories <"parent">
-    And  choose categories price <"price">
+    And user should enter categoriesName <"categoriesName">
+    And  user should enter parentCategories
+    And  user should enter price <"price">
+    And  user clicks the addCategories button
     Examples:
-      | "name" | "parent"  | "price" |
-      | "BDD"  | "Samples" | "200"   |
-      | "'':"  | "Samples" | "100"   |
-      |        |           |         |
+      | "categoriesName"                                                                   | "price" |
+      | "1"                                                                                | "120"   |
+      | "QA"                                                                               | "23"    |
+      | ";^&&*&"                                                                           | "a"     |
+      | "sfsfgrdfgvrdfvfdvrsfvzsfvdfvdfvdfvdfvdfvdfvrvbfgbgxsfsfgrdfgvrdfvfdvrsfvzsfvdfvdfvdfvdfvdfvdfvrvbfgbgxdbdgxbgdxbxbgbgxdsxzvzsvzfvsfsfgrdfgvrdfvfdvrsfvzsfvdfvdfvdfvdfvdfvdfvrvbfgbgxdbdgxbgdxbxbgbgxdsxzvzsvzfvdbdgxbgdxbxbgbgxdsxzvzsvzfvzv" | "1"     |
